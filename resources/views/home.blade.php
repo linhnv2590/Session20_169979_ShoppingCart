@@ -14,12 +14,12 @@
         @foreach($products as $product)
             <div class="col-3" id="product">
                 <div>{{$product->name}}</div>
-                <div><img src="{{asset('/storage/'.$product->image)}}" alt="" id="product-img-home"></div>
+                <div><img src="{{asset('/storage/'.$product->image)}}" alt="" id="product-img-home" class="img-thumbnail"></div>
                 <div><b>{{number_format($product->price)}} VND</b>
                     <small><del>{{number_format($product->old_price)}}</del></small>
                 </div>
                 <div>
-                    <a href="{{route('home', ['id' => $product->id])}}">
+                    <a href="{{route('cart.addToCart', ['id' => $product->id])}}">
                         <button class="btn btn-secondary">Add to Card</button>
                     </a>
                     <a href="{{route('products.show', ['id' => $product->id])}}">

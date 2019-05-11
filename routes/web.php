@@ -14,4 +14,9 @@ Route::prefix('products')->group(function () {
     Route::get('search/search', 'ProductController@search')->name('products.search');
 });
 
-
+Route::prefix('/cart')->group(function () {
+    Route::get('/', 'CartController@index')->name('cart.index');
+    Route::get('/add-to-cart/{id}', 'CartController@addToCart')->name('cart.addToCart');
+    Route::get('/clear-cart', 'CartController@clearCart')->name('cart.clearCart');
+    Route::get('/{id}/remove-item-from-cart', 'CartController@removeItemFromCart')->name('cart.removeItemFromCart');
+});

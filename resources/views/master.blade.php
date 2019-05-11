@@ -26,6 +26,15 @@
                 Products List
             </button>
         </a>
+        <a href="{{route('cart.index')}}" id="cart-link">
+            <button class="btn btn-light btn-lg btn-block" id="cart-btn">
+                <img src="{{asset('/storage/images/background/cart.png')}}" alt="" id="cart-icon">
+                Cart List
+                @if(Session::get('cart'))
+                    ({{Session::get('cart')->totalQuality}})
+                @endif
+            </button>
+        </a>
     </div>
     <div class="container-fluid col-10" id="home">
         @yield("content")
