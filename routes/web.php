@@ -19,4 +19,7 @@ Route::prefix('/cart')->group(function () {
     Route::get('/add-to-cart/{id}', 'CartController@addToCart')->name('cart.addToCart');
     Route::get('/clear-cart', 'CartController@clearCart')->name('cart.clearCart');
     Route::get('/{id}/remove-item-from-cart', 'CartController@removeItemFromCart')->name('cart.removeItemFromCart');
+    Route::get('/{id}/decrease', 'CartController@decreaseQuantity')->name('cart.decreaseQuantity');
+    Route::get('/{id}/increase', 'CartController@increaseQuantity')->name('cart.increaseQuantity');
+    Route::get('/{id}/increase-by-input-value', 'CartController@increaseQuantityByInputValue')->name('cart.increaseQuantityByInputValue');
 });

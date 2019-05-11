@@ -24,6 +24,16 @@
                     <p class="alert-success">
                         {{Session::get('removeItemFromCart')}}
                     </p>
+                @elseif(Session::has('messageDecreaseQuantity'))
+                    <p class="alert-success">
+                        {{Session::get('messageDecreaseQuantity')}}
+                    </p>
+                @endif
+
+                @if($errors->any())
+                    @foreach($errors->all() as $error)
+                        <p class="alert-warning">{{$error}}</p>
+                    @endforeach
                 @endif
             </div>
 
@@ -35,12 +45,7 @@
                                  style="width: 150px">
                         </div>
                         <div class="col-3">
-                            <div style="padding-bottom: 10px">{{$product['item']->name}}</div>
-                            <div>
-                                <a href="{{route('cart.removeItemFromCart', ['id'=>$product['item']->id])}}">
-                                    <button class="btn btn-danger">Delete</button>
-                                </a>
-                            </div>
+                            <div>{{$product['item']->name}}</div>
                         </div>
                         <div class="col-3">
                             <div><strong>{{number_format($product['item']->price)}} VND</strong></div>
@@ -50,8 +55,31 @@
                                 </small>
                             </div>
                         </div>
+                        <div class="col-2">
+                            <div class="row">
+                                <div>
+                                    <a href="{{route('cart.decreaseQuantity', ['id' => $product['item']->id])}}">
+                                        <button type="button" class="btn btn-outline-secondary">-</button>
+                                    </a>
+                                </div>
+                                <form action="{{route('cart.increaseQuantityByInputValue', ['id' => $product['item']->id])}}"
+                                      method="get">
+                                    @csrf
+                                    <input type="text" class="form-control" style="width: 50px; text-align: center"
+                                           value="{{$product['quantity']}}" name="cartQuantity">
+                                </form>
+                                <div>
+                                    <a href="{{route('cart.increaseQuantity', ['id' => $product['item']->id])}}">
+                                        <button type="button" class="btn btn-outline-secondary">+</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-1">
-                            <div>Quantity: {{$product['quantity']}}</div>
+                            <a href="{{route('cart.removeItemFromCart', ['id'=>$product['item']->id])}}">
+                                <img src="{{asset('/storage/images/background/delete.png')}}" alt=""
+                                     style="width: 40px">
+                            </a>
                         </div>
                     </div>
                 @endforeach
@@ -67,7 +95,7 @@
                 <h1>Order Bill</h1>
                 <div>
                     <p>Total Price: <span
-                                style="color: red; font-size:x-large"><strong>{{$cart->totalPrice}}</strong></span>
+                                style="color: red; font-size:x-large"><strong>{{number_format($cart->totalPrice)}}</strong></span>
                     </p>
                 </div>
                 <div>

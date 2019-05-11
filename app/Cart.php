@@ -4,6 +4,8 @@
 namespace App;
 
 
+use Illuminate\Http\Request;
+
 class Cart
 {
     public $itemsList = null;
@@ -51,5 +53,37 @@ class Cart
         unset($this->itemsList[$id]);
         $this->totalQuantity -= $currentQuantity;
         $this->totalPrice -= $currentPrice;
+    }
+
+    public function decreaseQuantity($id, $oldCart)
+    {
+        $oldCart->itemsList[$id]['quantity'] -= 1;
+        $this->totalQuantity--;
+        $this->totalPrice -= $oldCart->itemsList[$id]['item']['price'];
+    }
+
+    public function increaseQuantity($id, $oldCart)
+    {
+        $oldCart->itemsList[$id]['quantity'] += 1;
+        $this->totalQuantity++;
+        $this->totalPrice += $oldCart->itemsList[$id]['item']['price'];
+    }
+
+    public function increaseQuantityByInputValue($id, $oldCart, $inputValue)
+    {
+        $currentQuantity = $oldCart->itemsList[$id]['quantity'];
+
+
+        if ($currentQuantity < $inputValue) {
+            $this->totalQuantity += $inputValue - $currentQuantity;
+            $currentPrice = ($oldCart->itemsList[$id]['item']['price']) * ($inputValue - $currentQuantity);
+            $this->totalPrice += $currentPrice;
+        } else {
+            $this->totalQuantity -= $currentQuantity- $inputValue;
+            $currentPrice = ($oldCart->itemsList[$id]['item']['price']) * ($currentQuantity - $inputValue);
+            $this->totalPrice -= $currentPrice;
+        }
+
+        $oldCart->itemsList[$id]['quantity'] = $inputValue;
     }
 }
