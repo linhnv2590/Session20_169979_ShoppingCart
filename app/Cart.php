@@ -7,14 +7,14 @@ namespace App;
 class Cart
 {
     public $itemsList = null;
-    public $totalQuality = 0;
+    public $totalQuantity = 0;
     public $totalPrice = 0;
 
     public function __construct($oldCart)
     {
         if ($oldCart) {
             $this->itemsList = $oldCart->itemsList;
-            $this->totalQuality = $oldCart->totalQuality;
+            $this->totalQuantity = $oldCart->totalQuantity;
             $this->totalPrice = $oldCart->totalPrice;
         }
     }
@@ -22,7 +22,7 @@ class Cart
     public function addToCart($item, $id)
     {
         $storedItems = [
-            'quality' => 0,
+            'quantity' => 0,
             'price' => $item->price,
             'item' => $item
         ];
@@ -33,23 +33,23 @@ class Cart
             }
         }
 
-        $storedItems['quality']++;
+        $storedItems['quantity']++;
 
-        $storedItems['price'] = $item->price * $storedItems['quality'];
+        $storedItems['price'] = $item->price * $storedItems['quantity'];
 
         $this->itemsList[$id] = $storedItems;
 
-        $this->totalQuality++;
+        $this->totalQuantity++;
         $this->totalPrice += $item->price;
     }
 
     public function removeItemFromCart($id, $oldCart)
     {
-        $currentQuality = $oldCart->itemsList[$id]['quality'];
-        $currentPrice = ($oldCart->itemsList[$id]['item']['price']) * $currentQuality;
+        $currentQuantity = $oldCart->itemsList[$id]['quantity'];
+        $currentPrice = ($oldCart->itemsList[$id]['item']['price']) * $currentQuantity;
 
         unset($this->itemsList[$id]);
-        $this->totalQuality -= $currentQuality;
+        $this->totalQuantity -= $currentQuantity;
         $this->totalPrice -= $currentPrice;
     }
 }

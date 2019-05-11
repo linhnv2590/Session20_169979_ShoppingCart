@@ -31,7 +31,7 @@
                 <img src="{{asset('/storage/images/background/cart.png')}}" alt="" id="cart-icon">
                 Cart List
                 @if(Session::get('cart'))
-                    ({{Session::get('cart')->totalQuality}})
+                    ({{Session::get('cart')->totalQuantity}})
                 @endif
             </button>
         </a>

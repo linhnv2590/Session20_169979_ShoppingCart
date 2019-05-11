@@ -2,7 +2,7 @@
 @section("title", "Cart List")
 @section("content")
     <div class="row">
-        @if(!$cart || $cart->totalQuality == 0)
+        @if(!$cart || $cart->totalQuantity == 0)
             {{Session::flush()}}
 
             <div class="col-12" style="text-align: center">
@@ -17,7 +17,7 @@
                 </div>
             </div>
         @else
-            <h1>Cart List ({{$cart->totalQuality}} Product)</h1>
+            <h1>Cart List ({{$cart->totalQuantity}} Product)</h1>
 
             <div class="col-12">
                 @if(Session::has('removeItemFromCart'))
@@ -51,7 +51,7 @@
                             </div>
                         </div>
                         <div class="col-1">
-                            <div>Quality: {{$product['quality']}}</div>
+                            <div>Quantity: {{$product['quantity']}}</div>
                         </div>
                     </div>
                 @endforeach
